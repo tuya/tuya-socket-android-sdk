@@ -1,0 +1,175 @@
+{
+  "success": true,
+  "t": 1540799929837,
+  "result": [
+    {
+      "device_info": {
+        "device_id": "05606704bcddc23b90fb",
+        "capability": 1,
+        "node_id": "",
+        "mesh_id": "",
+        "local_key": "80126008d63edc01",
+        "standard": false,
+        "uid": "ay1571814240181TH1CI"
+      },
+      "schemas": {
+        "functionSchemaList": [
+          {
+            "relationDpIdMaps": {
+              "switch_led": 20
+            },
+            "standardType": "Boolean",
+            "strategyCode": "default",
+            "strategyValue": "{\"switch_led\":\"$\"}",
+            "standardCode": "switch_led"
+          },
+          {
+            "relationDpIdMaps": {
+              "work_mode": 21
+            },
+            "standardType": "Enum",
+            "strategyCode": "default",
+            "strategyValue": "{\"work_mode\":\"$\"}",
+            "standardCode": "work_mode"
+          },
+          {
+            "relationDpIdMaps": {
+              "bright_value": 22,
+              "work_mode": 21
+            },
+            "standardType": "Integer",
+            "strategyCode": "default",
+            "strategyValue": "{\"work_mode\":\"white\",\"bright_value\":\"$\"}",
+            "standardCode": "bright_value_v2"
+          },
+          {
+            "relationDpIdMaps": {
+              "temp_value": 23,
+              "work_mode": 21
+            },
+            "standardType": "Integer",
+            "strategyCode": "default",
+            "strategyValue": "{\"work_mode\":\"white\",\"temp_value\":\"$\"}",
+            "standardCode": "temp_value_v2"
+          },
+          {
+            "relationDpIdMaps": {
+              "colour_data": 24,
+              "work_mode": 21
+            },
+            "standardType": "Json",
+            "strategyCode": "dj_v2_color_alg",
+            "strategyValue": "{\"work_mode\":\"colour\",\"colour_data\":\"$\"}",
+            "standardCode": "colour_data_v2"
+          },
+          {
+            "relationDpIdMaps": {
+              "scene_data": 25,
+              "work_mode": 21
+            },
+            "standardType": "Json",
+            "strategyCode": "dj_v2_scene_alg",
+            "strategyValue": "{\"work_mode\":\"scene\",\"scene_data\":\"$\"}",
+            "standardCode": "scene_data_v2"
+          },
+          {
+            "relationDpIdMaps": {
+              "countdown": 26
+            },
+            "standardType": "Integer",
+            "strategyCode": "default",
+            "strategyValue": "{\"countdown\":\"$\"}",
+            "standardCode": "countdown_1"
+          },
+          {
+            "relationDpIdMaps": {
+              "control_data": 28
+            },
+            "standardType": "Json",
+            "strategyCode": "dj_v2_contr_alg",
+            "strategyValue": "{\"control_data\":\"$\"}",
+            "standardCode": "control_data"
+          }
+        ],
+        "statusSchemaList": [
+          {
+            "relationDpIdMaps": {
+              "switch_led": 20
+            },
+            "dpCode": "switch_led",
+            "standardType": "",
+            "strategyCode": "default",
+            "strategyValue": "{\"switch_led\":\"$\"}"
+          },
+          {
+            "relationDpIdMaps": {
+              "work_mode": 21
+            },
+            "dpCode": "work_mode",
+            "standardType": "",
+            "strategyCode": "default",
+            "strategyValue": "{\"work_mode\":\"$\"}"
+          },
+          {
+            "relationDpIdMaps": {
+              "bright_value": 22
+            },
+            "dpCode": "bright_value",
+            "standardType": "",
+            "strategyCode": "default",
+            "strategyValue": "{\"bright_value_v2\":\"$\"}"
+          },
+          {
+            "relationDpIdMaps": {
+              "temp_value": 23
+            },
+            "dpCode": "temp_value",
+            "standardType": "",
+            "strategyCode": "default",
+            "strategyValue": "{\"temp_value_v2\":\"$\"}"
+          },
+          {
+            "relationDpIdMaps": {
+              "colour_data": 24
+            },
+            "dpCode": "colour_data",
+            "standardType": "",
+            "strategyCode": "dj_v2_color_alg",
+            "strategyValue": "{\"colour_data_v2\":\"$\"}"
+          },
+          {
+            "relationDpIdMaps": {
+              "scene_data": 25
+            },
+            "dpCode": "scene_data",
+            "standardType": "",
+            "strategyCode": "dj_v2_scene_alg",
+            "strategyValue": "{\"scene_data_v2\":\"$\"}"
+          },
+          {
+            "relationDpIdMaps": {
+              "countdown": 26
+            },
+            "dpCode": "countdown",
+            "standardType": "",
+            "strategyCode": "default",
+            "strategyValue": "{\"countdown_1\":\"$\"}"
+          },
+          {
+            "relationDpIdMaps": {
+              "control_data": 28
+            },
+            "dpCode": "control_data",
+            "standardType": "",
+            "strategyCode": "dj_v2_contr_alg",
+            "strategyValue": "{\"control_data\":\"$\"}"
+          }
+        ]
+      },
+      "schema_info": {
+        "schema": "[{\"mode\":\"rw\",\"code\":\"switch_led\",\"name\":\"开关\",\"property\":{\"type\":\"bool\"},\"iconname\":\"icon-dp_power2\",\"id\":20,\"type\":\"obj\",\"desc\":\"\"},{\"mode\":\"rw\",\"code\":\"work_mode\",\"name\":\"模式\",\"property\":{\"range\":[\"white\",\"colour\",\"scene\",\"music\"],\"type\":\"enum\"},\"iconname\":\"icon-dp_list\",\"id\":21,\"type\":\"obj\",\"desc\":\"\"},{\"mode\":\"rw\",\"code\":\"bright_value\",\"name\":\"亮度值\",\"property\":{\"unit\":\"\",\"min\":10,\"max\":1000,\"scale\":0,\"step\":1,\"type\":\"value\"},\"iconname\":\"icon-dp_sun\",\"id\":22,\"type\":\"obj\",\"desc\":\"\"},{\"mode\":\"rw\",\"code\":\"temp_value\",\"name\":\"冷暖值\",\"property\":{\"unit\":\"\",\"min\":0,\"max\":1000,\"scale\":0,\"step\":1,\"type\":\"value\"},\"iconname\":\"icon-dp_half\",\"id\":23,\"type\":\"obj\",\"desc\":\"\"},{\"mode\":\"rw\",\"code\":\"colour_data\",\"name\":\"彩光\",\"property\":{\"type\":\"string\",\"maxlen\":255},\"iconname\":\"icon-dp_light\",\"id\":24,\"type\":\"obj\",\"desc\":\"\"},{\"mode\":\"rw\",\"code\":\"scene_data\",\"name\":\"场景\",\"property\":{\"type\":\"string\",\"maxlen\":255},\"iconname\":\"icon-dp_box2\",\"id\":25,\"type\":\"obj\",\"desc\":\"\"},{\"mode\":\"rw\",\"code\":\"countdown\",\"name\":\"倒计时剩余时间\",\"property\":{\"unit\":\"\",\"min\":0,\"max\":86400,\"scale\":0,\"step\":1,\"type\":\"value\"},\"iconname\":\"icon-timer1\",\"id\":26,\"type\":\"obj\",\"desc\":\"\"},{\"mode\":\"wr\",\"code\":\"control_data\",\"name\":\"调节\",\"property\":{\"type\":\"string\",\"maxlen\":255},\"iconname\":\"icon-setting\",\"id\":28,\"type\":\"obj\",\"desc\":\"\"}]",
+        "schemaExt": "[{\"id\":20,\"inputStyle\":\"\",\"inputType\":\"plain\"},{\"id\":21,\"inputStyle\":\"\",\"inputType\":\" \"},{\"id\":22,\"inputStyle\":\"\",\"inputType\":\"percent1\"},{\"id\":23,\"inputStyle\":\"\",\"inputType\":\"percent\"},{\"id\":26,\"inputStyle\":\"\",\"inputType\":\" \"}]"
+      }
+    }
+  ]
+}
