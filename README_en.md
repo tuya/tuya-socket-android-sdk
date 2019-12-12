@@ -2,12 +2,13 @@
 
 It is mainly aimed at Android developers in Tuya cloud products. The project aims to provide a local area network connection between an Android phone and a hardware device, and send dpCode in the local area network for device control communication.
 
-
 Tuya devices connection and control process is as follows:
 
 ![https://cdn.nlark.com/yuque/__puml/1de1d74497bdbb14a4debde42f3f3f34.svg](https://cdn.nlark.com/yuque/__puml/1de1d74497bdbb14a4debde42f3f3f34.svg)
 
 ## Preparation
+
+You can refer to the demo[localcontroldemo](localcontroldemo)
 
 Root directory `build.gradle` add tuya maven url
 
@@ -24,7 +25,7 @@ module level `build.gradle` add dependency:
 
 	implementation 'com.tuya.smart:socket-sdk:0.1.0'
 
-## 一、initialization
+## 一、Initialization
 
 The initialization interface is called when the application or Activity starts.
 

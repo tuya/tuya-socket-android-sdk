@@ -11,6 +11,8 @@ TuyaSmartSocketKit 主要针对涂鸦云云对接的产品中Android端开发者
 
 ## 接入准备
 
+接入可以参考demo [localcontroldemo](localcontroldemo)
+
 根目录的`build.gradle`中添加 tuya maven url
 
 	allprojects {
