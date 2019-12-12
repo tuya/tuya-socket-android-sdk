@@ -1,17 +1,15 @@
+# TuyaSmartSocketSdk
 
---------------------[English documentation](README_en.md)----------------------
+It is mainly aimed at Android developers in Tuya cloud products. The project aims to provide a local area network connection between an Android phone and a hardware device, and send dpCode in the local area network for device control communication.
 
-----------------------------------------------------
 
-TuyaSmartSocketKit 主要针对涂鸦云云对接的产品中Android端开发者。该项目旨在提供Android手机（以下简称手机）与硬件设备（以下简称设备）的局域网连接，并在局域网中发送dpCode进行设备控制通信。
-
-涂鸦设备连接与控制流程如下：
+Tuya devices connection and control process is as follows:
 
 ![https://cdn.nlark.com/yuque/__puml/1de1d74497bdbb14a4debde42f3f3f34.svg](https://cdn.nlark.com/yuque/__puml/1de1d74497bdbb14a4debde42f3f3f34.svg)
 
-## 接入准备
+## Preparation
 
-根目录的`build.gradle`中添加 tuya maven url
+Root directory `build.gradle` add tuya maven url
 
 	allprojects {
 	    repositories {
@@ -22,47 +20,48 @@ TuyaSmartSocketKit 主要针对涂鸦云云对接的产品中Android端开发者
 	        jcenter()
 	    }
 	}
-module中的`build.gradle`中添加依赖：
+module level `build.gradle` add dependency: 
 
 	implementation 'com.tuya.smart:socket-sdk:0.1.0'
 
-## 一、局域网初始化
+## 一、initialization
 
+The initialization interface is called when the application or Activity starts.
 
     /**
-     * 初始化监听
+     * init and register listener
      * @param context context
-     * @param socketListener socket监听
+     * @param socketListener 
      */
     void init(Context context, TuyaSocketListener socketListener);
-    
-应用或Activity启动时调用初始化接口。
+   
 
-其中，TuyaSocketListener中的方法如下：
-
+The methods in TuyaSocketListener are as follows:
 	
     /**
-     * 连接断开
-     * @param deviceId 设备id
-     * @param errorCode 错误码 {@link com.tuya.sdk.lancontrol.api.ErrorCode}
+     * Called when connect disconnected
+     * @param deviceId 
+     * @param errorCode {@link com.tuya.sdk.lancontrol.api.ErrorCode}
      */
     void onDisconnected(String deviceId, int errorCode);
 
     /**
-     * 设备连接
-     * @param deviceId 设备id
+     * Called when connect success
+     *
+     * @param deviceId 
      */
     void onConnected(String deviceId);
 
     /**
-     * 设备控制成功
-     * @param deviceId 设备id
-     * @param commands 修改成功的设备功能点
+     * Device control succeeded, and hardware reports the control success commands
+     * 
+     * @param deviceId
+     * @param commands the control success commands
      */
     void onCommandsReceived(String deviceId, Map<String, Object> commands);
 
 
-调用示例：
+example：
 
     TuyaSocketManager.getInstance().init(this, new TuyaSocketListener() {
         @Override
@@ -82,11 +81,11 @@ module中的`build.gradle`中添加依赖：
     });
 
 
-## 二、添加设备信息
+## 二、Add device information
 
-添加设备信息到SDK中，SDK内部将自动建立与设备的局域网连接。
+Add device information to the SDK, and the SDK will automatically establish a LAN connection with the device.
 
-该参数可以通过云云对接的接口 `/v1.0/devices/schema` 获取到。
+This parameter can be obtained through the cloud-docking interface `/ v1.0 / devices / schema`.
 
     /**
      * 
@@ -94,23 +93,24 @@ module中的`build.gradle`中添加依赖：
      */
     void addDeviceInfo(String deviceInfoJsonString);
 
-调用示例：
+example：
 
 	TuyaSocketManager.getInstance().addDeviceInfo(json);
 
 
-## 三、设备控制
+## 三、device control
 
     /**
-     * 发送控制命令
-     * @param deviceId 设备id
-     * @param commands 控制命令
-     * @param resultCallback 发送回调
+     * send control commands
+     * 
+     * @param deviceId deviceId
+     * @param commands control commands
+     * @param resultCallback
      */
 	TuyaSocketManager.getInstance().publishCommands(String deviceId, Map<String, Object> commands, ResultCallback resultCallback);
 
 
-调用示例：
+example：
 
     HashMap<String, Object> commands = new HashMap<>();
     boolean value = new Random().nextBoolean();
@@ -129,30 +129,25 @@ module中的`build.gradle`中添加依赖：
 
 ## 四、关闭连接
 
-当您的应用退出时，您可以关闭所有局域网连接：
+When your app exits, you can close all LAN connections:
 
     // Close all devices connect
     TuyaSocketManager.getInstance().destroy(this);
 
-## 附加说明
+## Additional information
 
-dpCodeValue组成规则：
+`dpCodeValue` composition rules:
 
-要了解dp点的详细信息，可以参考 [设备功能点文档](https://tuyainc.github.io/tuyasmart_home_ios_sdk_doc/zh-hans/resource/Device.html#%E8%AE%BE%E5%A4%87%E5%8A%9F%E8%83%BD%E7%82%B9)
+To learn more about dp points, you can refer to [Update device information](https://tuyainc.github.io/tuyasmart_home_ios_sdk_doc/en/resource/Device.html#update-device-information).
+`dpCode` is a function point that describes the device, that is, which function controls a device supports. The schema returned in the `/v1.0/devices/schema` interface will return the feature points supported by the device. The typical function points are described below.
+`dpCodeDict` is performed in the format `dpCode` : `dpValue` . `dpCode`  can be obtained from the code field in the schema. `dpValue`  needs to be sent according to the format supported by the `dp point`.
+The following will take Demo given in the interface document as an example to explain how dpCode  is structured.
 
-dpCode是描述设备的功能点，即一个设备支持哪些功能控制。在 " /v1.0/devices/schema" 接口中返回的 schema 中会返回的就是设备支持的功能点。以下分别对典型的功能点进行说明。
-
-dpCodeDict均以 `dpCode : dpValue` 的格式进行。
-
-dpCode 可以从 schema 中 code 字段获得。dpValue 需要根据dp点支持的格式发送。
-
-以下将以接口文档中给出的Demo为例，说明dpCode如何构成。
-
-1. 开关
+1. Switch
 
 	"type": "bool"
 
-	例如：`{"switch_led" : true}` 或者 `{"switch_led" : true}`
+	e.g.：`{"switch_led" : true}` 或者 `{"switch_led" : true}`
 		
 		{
 		    "mode": "rw",
@@ -167,7 +162,7 @@ dpCode 可以从 schema 中 code 字段获得。dpValue 需要根据dp点支持�
 		    "desc": ""
 		}
 		
-2. 模式选择 (单选)
+2. Mode option (signal choose)
 	
 	"type": "enum"
 	
@@ -186,7 +181,7 @@ dpCode 可以从 schema 中 code 字段获得。dpValue 需要根据dp点支持�
 		    "type": "obj",
 		    "desc": ""
 		}
-3. 亮度值(发送数值)
+3. Brightness value (send number)
 	
 	"type": "value"
 	
@@ -210,7 +205,7 @@ dpCode 可以从 schema 中 code 字段获得。dpValue 需要根据dp点支持�
 		    "type": "obj",
 		    "desc": ""
 		}
-4. 彩光(发送字符串)
+4. Color data (send string)
 
 	"type": "string"
 	
