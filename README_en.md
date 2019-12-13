@@ -23,7 +23,7 @@ Root directory `build.gradle` add tuya maven url
 	}
 module level `build.gradle` add dependency: 
 
-	implementation 'com.tuya.smart:socket-sdk:0.1.0'
+	implementation 'com.tuya.smart:socket-sdk:0.1.1'
 
 ## 一、Initialization
 

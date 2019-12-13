@@ -26,7 +26,7 @@ TuyaSmartSocketKit 主要针对涂鸦云云对接的产品中Android端开发者
 	}
 module中的`build.gradle`中添加依赖：
 
-	implementation 'com.tuya.smart:socket-sdk:0.1.0'
+	implementation 'com.tuya.smart:socket-sdk:0.1.1'
 
 ## 一、局域网初始化
 
