@@ -1,6 +1,6 @@
 # Tuya Smart Socket SDK
 
-[English](README.md) | [中文版](README_cn.md)
+[English](README.md) | [中文版](README_zh.md)
 
 ## Introduction
 
