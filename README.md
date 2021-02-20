@@ -1,16 +1,20 @@
-# TuyaSmartSocketSdk
+# Tuya Smart Socket SDK
 
-It is mainly aimed at Android developers in Tuya cloud products. The project aims to provide a local area network connection between an Android phone and a hardware device, and send dpCode in the local area network for device control communication.
+[English](README.md) | [中文版](README_cn.md)
 
-Tuya devices connection and control process is as follows:
+## Introduction
+
+Tuya Smart Socket SDK is used for Android development of Tuya's cloud products. The project provides a local area network (LAN) connection between an Android phone and a device, and sends dpCode in the LAN for device control communication.
+
+The following figure shows device connection and control process:
 
 ![https://cdn.nlark.com/yuque/__puml/1de1d74497bdbb14a4debde42f3f3f34.svg](https://cdn.nlark.com/yuque/__puml/1de1d74497bdbb14a4debde42f3f3f34.svg)
 
 ## Preparation
 
-You can refer to the demo[localcontroldemo](localcontroldemo)
+You can refer to the demo [localcontroldemo](localcontroldemo).
 
-Root directory `build.gradle` add tuya maven url
+Add tuya maven url to `build.gradle` in root directory
 
 	allprojects {
 	    repositories {
@@ -21,33 +25,34 @@ Root directory `build.gradle` add tuya maven url
 	        jcenter()
 	    }
 	}
-module level `build.gradle` add dependency: 
+
+Add dependency to `build.gradle` in module.
 
 	implementation 'com.tuya.smart:socket-sdk:0.1.1'
 
-## 一、Initialization
+## 1. Initialization
 
 The initialization interface is called when the application or Activity starts.
 
     /**
-     * init and register listener
+     * Initialize and register listener
      * @param context context
      * @param socketListener 
      */
     void init(Context context, TuyaSocketListener socketListener);
    
 
-The methods in TuyaSocketListener are as follows:
+The methods in TuyaSocketListener is as follows:
 	
     /**
-     * Called when connect disconnected
+     * Called on disconnection
      * @param deviceId 
      * @param errorCode {@link com.tuya.sdk.lancontrol.api.ErrorCode}
      */
     void onDisconnected(String deviceId, int errorCode);
 
     /**
-     * Called when connect success
+     * Called when connection succeeds
      *
      * @param deviceId 
      */
@@ -57,12 +62,12 @@ The methods in TuyaSocketListener are as follows:
      * Device control succeeded, and hardware reports the control success commands
      * 
      * @param deviceId
-     * @param commands the control success commands
+     * @param commands The control success commands
      */
     void onCommandsReceived(String deviceId, Map<String, Object> commands);
 
 
-example：
+Example:
 
     TuyaSocketManager.getInstance().init(this, new TuyaSocketListener() {
         @Override
@@ -82,36 +87,36 @@ example：
     });
 
 
-## 二、Add device information
+## 2. Add device information
 
 Add device information to the SDK, and the SDK will automatically establish a LAN connection with the device.
 
-This parameter can be obtained through the cloud-docking interface `/ v1.0 / devices / schema`.
+This parameter can be obtained through the cloud-connection interface `/ v1.0 / devices / schema`.
 
     /**
      * 
-     * @param deviceInfoJsonString 接口/v1.0/devices/schema的返回数据
+     * @param deviceInfoJsonString Data returned from interface /v1.0/devices/schema
      */
     void addDeviceInfo(String deviceInfoJsonString);
 
-example：
+Example:
 
 	TuyaSocketManager.getInstance().addDeviceInfo(json);
 
 
-## 三、device control
+## 3. Device control
 
     /**
-     * send control commands
+     * Send control commands
      * 
-     * @param deviceId deviceId
-     * @param commands control commands
+     * @param deviceId Device ID
+     * @param commands Control commands
      * @param resultCallback
      */
 	TuyaSocketManager.getInstance().publishCommands(String deviceId, Map<String, Object> commands, ResultCallback resultCallback);
 
 
-example：
+Example:
 
     HashMap<String, Object> commands = new HashMap<>();
     boolean value = new Random().nextBoolean();
@@ -128,32 +133,32 @@ example：
         }
     });
 
-## 四、关闭连接
+## 4. Disable connection
 
-When your app exits, you can close all LAN connections:
+When your app exits, you can disable all LAN connections:
 
-    // Close all devices connect
+    // Close all device connections
     TuyaSocketManager.getInstance().destroy(this);
 
 ## Additional information
 
 `dpCodeValue` composition rules:
 
-To learn more about dp points, you can refer to [Update device information](https://tuyainc.github.io/tuyasmart_home_ios_sdk_doc/en/resource/Device.html#update-device-information).
-`dpCode` is a function point that describes the device, that is, which function controls a device supports. The schema returned in the `/v1.0/devices/schema` interface will return the feature points supported by the device. The typical function points are described below.
-`dpCodeDict` is performed in the format `dpCode` : `dpValue` . `dpCode`  can be obtained from the code field in the schema. `dpValue`  needs to be sent according to the format supported by the `dp point`.
-The following will take Demo given in the interface document as an example to explain how dpCode  is structured.
+To learn more about data point (DP), you can refer to [Update device information](https://developer.tuya.com/en/docs/app-development/android-app-sdk/device-management/devicemanage?id=Ka6ki8r2rfiuu).
+`dpCode` is a DP that describes which functions can be controlled for a device. The schema returned in the `/v1.0/devices/schema` interface will return the DPs supported by a device. The typical DPs are described below.
+`dpCodeDict` is performed in the format `dpCode: dpValue`. `dpCode` can be obtained from the code field in the schema. `dpValue` needs to be sent according to the format supported by the `dp point`.
+The following will take the demo in the interface document as an example to explain how dpCode is structured.
 
 1. Switch
 
 	"type": "bool"
 
-	e.g.：`{"switch_led" : true}` 或者 `{"switch_led" : true}`
+	For example, `{"switch_led" : true}` or `{"switch_led" : true}`
 		
 		{
 		    "mode": "rw",
 		    "code": "switch_led",
-		    "name": "开关 ",
+		    "name": "Switch ",
 		    "property": {
 		        "type": "bool"
 		    },
@@ -163,16 +168,16 @@ The following will take Demo given in the interface document as an example to ex
 		    "desc": ""
 		}
 		
-2. Mode option (signal choose)
+2. Mode option (signal choice)
 	
 	"type": "enum"
 	
-	e.g. `{"work_mode" : "white"}` `{"work_mode" : "colour"} `
+	For example, `{"work_mode" : "white"}` `{"work_mode" : "colour"} `
 		
 		{
 		    "mode": "rw",
 		    "code": "work_mode",
-		    "name": "模式",
+		    "name": "Mode",
 		    "property": {
 		        "range": ["white", "colour", "scene", "music"],
 		        "type": "enum"
@@ -186,14 +191,14 @@ The following will take Demo given in the interface document as an example to ex
 	
 	"type": "value"
 	
-	e.g. `{"bright_value": 400}`
+	For example, `{"bright_value": 400}`
 	
-	注意：这里的数值有最大值、最小值、步进值限制。
+	Note: The value has maximum, minimum, and step limit.
 		
 		{
 		    "mode": "rw",
 		    "code": "bright_value",
-		    "name": "亮度值",
+		    "name": "Brightness",
 		    "property": {
 		        "min": 10,
 		        "max": 1000,
@@ -210,14 +215,14 @@ The following will take Demo given in the interface document as an example to ex
 
 	"type": "string"
 	
-	e.g. `{"colour_data":"000100010001"} `
+	For example, `{"colour_data":"000100010001"} `
 	
-	以上方式只是其中一种传递方式，具体的deValue值需要针对具体情况进行分析
+	The above method is only one of the transfer methods, and the specific deValue varies by application scenarios 
 	
 		{
 		    "mode": "rw",
 		    "code": "colour_data",
-		    "name": "彩光",
+		    "name": "Color",
 		    "property": {
 		        "type": "string",
 		        "maxlen": 255
